@@ -1,155 +1,165 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Neon Heart Pop</title>
-  <style>
-    :root {
-      --bg: #000;
-      --neon: #ff2ea6;
-      --neon-soft: #ff8bd2;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      overflow: hidden;
-      background: radial-gradient(circle at top, #12000f 0%, var(--bg) 45%);
-      color: #fff;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 100 100'%3E%3Cpath fill='%23ff2ea6' d='M50 88 C20 63 5 46 5 28 C5 14 16 5 29 5 C39 5 46 10 50 18 C54 10 61 5 71 5 C84 5 95 14 95 28 C95 46 80 63 50 88Z'/%3E%3C/svg%3E") 4 2, auto;
-      user-select: none;
-    }
-
-
-    .heart {
-      position: fixed;
-      width: var(--size);
-      height: var(--size);
-      background: linear-gradient(145deg, #ff84d8 0%, var(--neon) 60%, #b3006f 100%);
-      transform: rotate(-45deg);
-      left: calc(var(--x) - (var(--size) / 2));
-      top: calc(var(--y) - (var(--size) / 2));
-      filter: drop-shadow(0 0 6px var(--neon)) drop-shadow(0 0 16px var(--neon));
-      animation: pop 1.2s ease-out forwards;
-      pointer-events: none;
-    }
-
-    .heart::before,
-    .heart::after {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: inherit;
-    }
-
-    .heart::before {
-      top: -50%;
-      left: 0;
-    }
-
-    .heart::after {
-      top: 0;
-      left: 50%;
-    }
-
-    .message {
-      position: fixed;
-      left: var(--x);
-      top: var(--y);
-      transform: translate(-50%, -130%);
-      background: rgba(12, 0, 10, 0.9);
-      border: 1px solid var(--neon-soft);
-      color: #ffd9ef;
-      padding: 0.55rem 0.8rem;
-      border-radius: 999px;
-      font-size: clamp(0.85rem, 2vw, 1rem);
-      box-shadow: 0 0 8px var(--neon), 0 0 20px rgba(255, 46, 166, 0.5);
-      white-space: nowrap;
-      animation: float-msg 2s ease-out forwards;
-      pointer-events: none;
-    }
-
-    @keyframes pop {
-      0% {
-        opacity: 0;
-        transform: rotate(-45deg) scale(0.15);
-      }
-      20% {
-        opacity: 1;
-        transform: rotate(-45deg) scale(1.1);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(var(--dx), var(--dy)) rotate(-45deg) scale(0.2);
-      }
-    }
-
-    @keyframes float-msg {
-      0% {
-        opacity: 0;
-        transform: translate(-50%, -90%) scale(0.85);
-      }
-      18% {
-        opacity: 1;
-        transform: translate(-50%, -140%) scale(1);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(-50%, -180%) scale(0.95);
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <script>
-    const messages = [
-      "You light up my universe.",
-      "Every beat says your name.",
-      "Forever looks good on us.",
-      "You're my favorite love story.",
-      "My heart chose you.",
-      "You make everything glow.",
-    ];
-
-    const random = (min, max) => Math.random() * (max - min) + min;
-
-    function createHeart(x, y) {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.style.setProperty("--x", `${x}px`);
-      heart.style.setProperty("--y", `${y}px`);
-      heart.style.setProperty("--size", `${random(18, 44)}px`);
-      heart.style.setProperty("--dx", `${random(-70, 70)}px`);
-      heart.style.setProperty("--dy", `${random(-140, -40)}px`);
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 1300);
-    }
-
-    function createMessage(x, y) {
-      const msg = document.createElement("div");
-      msg.className = "message";
-      msg.style.setProperty("--x", `${x}px`);
-      msg.style.setProperty("--y", `${y}px`);
-      msg.textContent = messages[Math.floor(Math.random() * messages.length)];
-      document.body.appendChild(msg);
-      setTimeout(() => msg.remove(), 2100);
-    }
-
-    document.addEventListener("click", (event) => {
-      for (let i = 0; i < 9; i += 1) {
-        createHeart(event.clientX, event.clientY);
-      }
-      createMessage(event.clientX, event.clientY);
-    });
-  </script>
-</body>
-</html>
+ (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
+diff --git a/index.html b/index.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..55ca7aab326f3fa6b103120d4677c0cd5c622009
+--- /dev/null
++++ b/index.html
+@@ -0,0 +1,155 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++  <meta charset="UTF-8" />
++  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
++  <title>Neon Heart Pop</title>
++  <style>
++    :root {
++      --bg: #000;
++      --neon: #ff2ea6;
++      --neon-soft: #ff8bd2;
++    }
++
++    * {
++      box-sizing: border-box;
++    }
++
++    body {
++      margin: 0;
++      min-height: 100vh;
++      overflow: hidden;
++      background: radial-gradient(circle at top, #12000f 0%, var(--bg) 45%);
++      color: #fff;
++      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
++      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 100 100'%3E%3Cpath fill='%23ff2ea6' d='M50 88 C20 63 5 46 5 28 C5 14 16 5 29 5 C39 5 46 10 50 18 C54 10 61 5 71 5 C84 5 95 14 95 28 C95 46 80 63 50 88Z'/%3E%3C/svg%3E") 4 2, auto;
++      user-select: none;
++    }
++
++
++    .heart {
++      position: fixed;
++      width: var(--size);
++      height: var(--size);
++      background: linear-gradient(145deg, #ff84d8 0%, var(--neon) 60%, #b3006f 100%);
++      transform: rotate(-45deg);
++      left: calc(var(--x) - (var(--size) / 2));
++      top: calc(var(--y) - (var(--size) / 2));
++      filter: drop-shadow(0 0 6px var(--neon)) drop-shadow(0 0 16px var(--neon));
++      animation: pop 2.2s ease-out forwards;
++      pointer-events: none;
++    }
++
++    .heart::before,
++    .heart::after {
++      content: "";
++      position: absolute;
++      width: 100%;
++      height: 100%;
++      border-radius: 50%;
++      background: inherit;
++    }
++
++    .heart::before {
++      top: -50%;
++      left: 0;
++    }
++
++    .heart::after {
++      top: 0;
++      left: 50%;
++    }
++
++    .message {
++      position: fixed;
++      left: var(--x);
++      top: var(--y);
++      transform: translate(-50%, -130%);
++      background: rgba(12, 0, 10, 0.9);
++      border: 1px solid var(--neon-soft);
++      color: #ffd9ef;
++      padding: 0.55rem 0.8rem;
++      border-radius: 999px;
++      font-size: clamp(0.85rem, 2vw, 1rem);
++      box-shadow: 0 0 8px var(--neon), 0 0 20px rgba(255, 46, 166, 0.5);
++      white-space: nowrap;
++      animation: float-msg 2s ease-out forwards;
++      pointer-events: none;
++    }
++
++    @keyframes pop {
++      0% {
++        opacity: 0;
++        transform: rotate(-45deg) scale(0.15);
++      }
++      20% {
++        opacity: 1;
++        transform: rotate(-45deg) scale(1.1);
++      }
++      100% {
++        opacity: 0;
++        transform: translate(var(--dx), var(--dy)) rotate(-45deg) scale(2.4);
++      }
++    }
++
++    @keyframes float-msg {
++      0% {
++        opacity: 0;
++        transform: translate(-50%, -90%) scale(0.85);
++      }
++      18% {
++        opacity: 1;
++        transform: translate(-50%, -140%) scale(1);
++      }
++      100% {
++        opacity: 0;
++        transform: translate(-50%, -180%) scale(0.95);
++      }
++    }
++  </style>
++</head>
++<body>
++
++  <script>
++    const messages = [
++      "You've got this.",
++      "Brighter days are coming.",
++      "One step at a time—you're doing great.",
++      "Your strength is incredible.",
++      "Keep going, I'm cheering for you.",
++      "You are stronger than this moment.",
++    ];
++
++    const random = (min, max) => Math.random() * (max - min) + min;
++
++    function createHeart(x, y) {
++      const heart = document.createElement("div");
++      heart.className = "heart";
++      heart.style.setProperty("--x", `${x}px`);
++      heart.style.setProperty("--y", `${y}px`);
++      heart.style.setProperty("--size", `${random(18, 44)}px`);
++      heart.style.setProperty("--dx", `${random(-70, 70)}px`);
++      heart.style.setProperty("--dy", `${random(-140, -40)}px`);
++      document.body.appendChild(heart);
++      setTimeout(() => heart.remove(), 2300);
++    }
++
++    function createMessage(x, y) {
++      const msg = document.createElement("div");
++      msg.className = "message";
++      msg.style.setProperty("--x", `${x}px`);
++      msg.style.setProperty("--y", `${y}px`);
++      msg.textContent = messages[Math.floor(Math.random() * messages.length)];
++      document.body.appendChild(msg);
++      setTimeout(() => msg.remove(), 2100);
++    }
++
++    document.addEventListener("click", (event) => {
++      for (let i = 0; i < 9; i += 1) {
++        createHeart(event.clientX, event.clientY);
++      }
++      createMessage(event.clientX, event.clientY);
++    });
++  </script>
++</body>
++</html>
+ 
+EOF
+)
